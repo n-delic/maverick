@@ -7,6 +7,17 @@
     <div class="content">
       {{ partial "header.html" . }}
       {{ .Content }}
+      {{ if gt (len ( where .Site.RegularPages "Section" "projects" )) 0 }}
+      <h1>Latest Projects</h1>
+      <section>
+        {{ range (first 3 (where .Site.RegularPages "Section" "projects" ).ByDate.Reverse) }}
+          <p>
+            <time class="g time" datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "2006-01-02" .Date }}</time>&nbsp;
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          <p>
+        {{ end }}
+      </section>
+      {{ end }}
       {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
       <h1>Latest Post</h1>
       <section>
